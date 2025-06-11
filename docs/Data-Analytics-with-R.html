@@ -1688,16 +1688,16 @@ commands directly into the R console.</p>
 <p>In this part we’re going to show you how to generate random data, in particular, random data from our distributions, but before we do that we need to
 introduce the <code>set.seed()</code> function. In most computer languages, we can generate random numbers (and random data); however, the crux of generating random data is how to get the same results for comparative purposes, and this is where the <code>set.seed()</code> function comes in. In the simplest terms, the <code>set.seed()</code> function allows consistently get the “same” randomly generated data – not very random, but it has a purpose. For example, if you write the following code:</p>
 <pre class="r"><code>for(i in 1:10) print(sample(1:100,1))</code></pre>
-<pre><code>[1] 31
-[1] 87
-[1] 19
-[1] 30
-[1] 30
-[1] 78
-[1] 97
+<pre><code>[1] 93
+[1] 31
+[1] 86
+[1] 7
 [1] 5
-[1] 75
-[1] 10</code></pre>
+[1] 58
+[1] 54
+[1] 51
+[1] 30
+[1] 43</code></pre>
 <p>You’ll probably get different values than the list above; however, if you repeat the previous code with the following modification, you’ll (hopefully) get the exact same values as me:</p>
 <pre class="r"><code>set.seed(2018)
 for(i in 1:10) print(sample(1:100,1))</code></pre>
@@ -2759,7 +2759,7 @@ I’ll leave it to you to explore the package more.
 <p>As mentioned, parallel processing allows us to simultaneously apply a function instead of going through each variable sequentially. To figure out the computing time, we can use the function <code>proc.time</code>, which can be used to determine how much “real” and CPU time (in seconds) a process takes:</p>
 <pre class="r"><code>proc.time()</code></pre>
 <pre><code>   user  system elapsed 
-  1.320   0.246   2.853 </code></pre>
+  1.296   0.256   2.938 </code></pre>
 <p>The third output <code>elapsed</code> will be important for us to use to calculate the process time.</p>
 <blockquote>
 <p><b>COMMENT</b>: In order to accurately calculate the process time, we need to:</p>
@@ -2787,7 +2787,7 @@ for (i in 1:100000){  # Loop through the vector, adding one
 stop &lt;- proc.time()   # Stop the clock
 stop - start          # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.005   0.000   0.004 </code></pre>
+  0.004   0.000   0.004 </code></pre>
 <p>In this case, the computing time was 0.004 seconds, which isn’t very long but this is clearly not a computationally extensive task.</p>
 <pre class="r"><code>colind &lt;- 7:10                                        # numerical index for each variable
 output &lt;- NULL                                        # empty object to be appended
@@ -2800,7 +2800,7 @@ stop1  &lt;- proc.time()
 # Stop highlighting code here
 stop1 - start1                                        # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.001   0.000   0.001 </code></pre>
+  0.002   0.000   0.001 </code></pre>
 <pre class="r"><code>output &lt;- data.frame(matrix(output,ncol=2,byrow=T))   # convert to data.frame to make it pretty
 row.names(output) &lt;- names(data2)[colind]             # naming the rows
 colnames(output)  &lt;- c(&#39;mean&#39;,&#39;sd&#39;)                   # naming the columns
@@ -2826,7 +2826,7 @@ stop2 - start2                                        # Computing time</code></p
   }</code></pre>
 <p>This <code>comp.time</code> function is the exact same as the original (and everything we did above is still applicable) but it is a wrapper that will also output the actual time when <code>proc.time</code> is started (or stopped). That is, if you replace <code>proc.time</code> with <code>comp.time</code>, you will see the actual clock start time when the code is initiated and the clock time when it is completed. Thus, if we run the code right now, you’ll see the actual clock time when I compiled this code:</p>
 <pre class="r"><code>start3 &lt;- comp.time()</code></pre>
-<pre><code>Time: 14:42:59 </code></pre>
+<pre><code>Time: 14:47:39 </code></pre>
 </blockquote>
 <p><br></p>
 </div>
@@ -4454,6 +4454,7 @@ Click for full list of references
 <li><p><a href="https://statsandr.com/blog/">Stats and R</a></p></li>
 <li><p><a href="www.datanovia.com">Datanovia</a></p></li>
 <li><p><a href="https://rcompanion.org/handbook/">Summary and Analysis of Extension Program Evaluation in R</a></p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/qicharts/vignettes/controlcharts.html">Control Charts with qicharts for R</a></p></li>
 </ul>
 </details>
 <div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 50px;">
