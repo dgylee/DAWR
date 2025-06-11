@@ -1483,15 +1483,7 @@ blockquote {font-size: 11pt;}
 <li><a href="https://rmarkdown.rstudio.com/lesson-1.html">Rmarkdown</a>: R Markdown (a markup language for creating formatted text using a plain-text editor) provides an authoring framework for writing documents that can incorporate R codes that can be saved and executed to generate high quality reports that can be shared with an audience. This document was written in RMarkdown; however, as a consultant, I’ve written reports to clients that, for example, were updated every 6 months with new data and I only had to make minor edits to the report because all the basic stats were automatically regenerated once I recompiled the document.</li>
 <li><a href="https://r4ds.hadley.nz/">R for Data Science</a>: Several parts of this document will probably direct you to “R for Data Science” (Hadley Wickham), which is an amazing resource for introductory data science. I use this resource, which is open-source, for many courses I teach and to train my own research students.</li>
 </ol>
-<p>This document will (hopefully) updated regularly, so please look at the Version History below to see any changes/updates to the file.</p>
-<details>
-<summary>
-Click for Version History and Changes
-</summary>
-<ul>
-<li>Version 0.0.1. Incomplete document missing Advanced Methods <a href="#statistical-analysis">Statistical Analysis</a> completed. Compiled June 5, 2025.</li>
-</ul>
-</details>
+<p>This document will (hopefully) updated regularly, so please look at the Version History on the main page to see any changes/updates to the file.</p>
 <p><br></p>
 </div>
 <div id="r-overview" class="section level1" number="2">
@@ -1688,16 +1680,16 @@ commands directly into the R console.</p>
 <p>In this part we’re going to show you how to generate random data, in particular, random data from our distributions, but before we do that we need to
 introduce the <code>set.seed()</code> function. In most computer languages, we can generate random numbers (and random data); however, the crux of generating random data is how to get the same results for comparative purposes, and this is where the <code>set.seed()</code> function comes in. In the simplest terms, the <code>set.seed()</code> function allows consistently get the “same” randomly generated data – not very random, but it has a purpose. For example, if you write the following code:</p>
 <pre class="r"><code>for(i in 1:10) print(sample(1:100,1))</code></pre>
-<pre><code>[1] 93
-[1] 31
-[1] 86
-[1] 7
-[1] 5
-[1] 58
-[1] 54
-[1] 51
-[1] 30
-[1] 43</code></pre>
+<pre><code>[1] 32
+[1] 92
+[1] 6
+[1] 12
+[1] 36
+[1] 57
+[1] 87
+[1] 46
+[1] 73
+[1] 19</code></pre>
 <p>You’ll probably get different values than the list above; however, if you repeat the previous code with the following modification, you’ll (hopefully) get the exact same values as me:</p>
 <pre class="r"><code>set.seed(2018)
 for(i in 1:10) print(sample(1:100,1))</code></pre>
@@ -2759,7 +2751,7 @@ I’ll leave it to you to explore the package more.
 <p>As mentioned, parallel processing allows us to simultaneously apply a function instead of going through each variable sequentially. To figure out the computing time, we can use the function <code>proc.time</code>, which can be used to determine how much “real” and CPU time (in seconds) a process takes:</p>
 <pre class="r"><code>proc.time()</code></pre>
 <pre><code>   user  system elapsed 
-  1.296   0.256   2.938 </code></pre>
+  1.359   0.275   3.173 </code></pre>
 <p>The third output <code>elapsed</code> will be important for us to use to calculate the process time.</p>
 <blockquote>
 <p><b>COMMENT</b>: In order to accurately calculate the process time, we need to:</p>
@@ -2800,7 +2792,7 @@ stop1  &lt;- proc.time()
 # Stop highlighting code here
 stop1 - start1                                        # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.002   0.000   0.001 </code></pre>
+  0.001   0.000   0.002 </code></pre>
 <pre class="r"><code>output &lt;- data.frame(matrix(output,ncol=2,byrow=T))   # convert to data.frame to make it pretty
 row.names(output) &lt;- names(data2)[colind]             # naming the rows
 colnames(output)  &lt;- c(&#39;mean&#39;,&#39;sd&#39;)                   # naming the columns
@@ -2813,8 +2805,8 @@ stop2  &lt;- proc.time()
 # Stop highlighting code here
 stop2 - start2                                        # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.001   0.000   0.000 </code></pre>
-<p>Adding the <code>proc.time</code> function to the code above, we can see that the processing time for option 1 (sequential) is 0.001 seconds while for option 2 (parallel), the processing time is much smaller at 0.0001 seconds (i.e. sequential is 10 times longer). Although that does not seem like much, time is not linear, so as we scale up the number of (for example) variables we are applying the function to, time won’t increase linearly but exponentially.</p>
+      0       0       0 </code></pre>
+<p>Adding the <code>proc.time</code> function to the code above, we can see that the processing time for option 1 (sequential) is 0.002 seconds while for option 2 (parallel), the processing time is much smaller at 0.0002 seconds (i.e. sequential is 10 times longer). Although that does not seem like much, time is not linear, so as we scale up the number of (for example) variables we are applying the function to, time won’t increase linearly but exponentially.</p>
 <blockquote>
 <b>COMMENT</b>: Processing time will vary for everyone because each computer’s specs are different while the current tasks being run by other programs on the same computer will also impact the resources at your disposal.
 </blockquote>
@@ -2826,7 +2818,7 @@ stop2 - start2                                        # Computing time</code></p
   }</code></pre>
 <p>This <code>comp.time</code> function is the exact same as the original (and everything we did above is still applicable) but it is a wrapper that will also output the actual time when <code>proc.time</code> is started (or stopped). That is, if you replace <code>proc.time</code> with <code>comp.time</code>, you will see the actual clock start time when the code is initiated and the clock time when it is completed. Thus, if we run the code right now, you’ll see the actual clock time when I compiled this code:</p>
 <pre class="r"><code>start3 &lt;- comp.time()</code></pre>
-<pre><code>Time: 14:47:39 </code></pre>
+<pre><code>Time: 14:52:20 </code></pre>
 </blockquote>
 <p><br></p>
 </div>
