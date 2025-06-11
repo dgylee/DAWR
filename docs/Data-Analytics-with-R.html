@@ -1472,7 +1472,7 @@ border-radius: 0px;
 <style type="text/css">
 blockquote {font-size: 11pt;}
 </style>
-<p>[Version 0.0.2] Last compiled: June 11, 2025 14:57 (ADT)</p>
+<p>[Version 0.0.2] Last compiled: June 11, 2025 15:05 (ADT)</p>
 <div id="introduction" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
 <p>Per the prior page, the following is a basic (and crude) crash course in Data Analytics with R for common tasks needed for data and statistical analysis - it is by no means exhaustive and (in all honesty) will have some parts that may be outdated (or soon to be), in part, due to the rapidly, evolving nature of R and associated packages. I have worked with R for the better part of 20 years, as such, some of the things written here are partly me just set in my own ways and not bothering to find the newest tools (if it ain’t broke, I’m not going to fix it). It is assumed that you have a basic understanding of the theory/assumptions of most of these tests and, therefore, the primary purpose is to expose you to the the specifics steps necessary to perform these steps (and that you will do your due diligence when it comes to verifying the veracity of your results).</p>
@@ -1483,7 +1483,7 @@ blockquote {font-size: 11pt;}
 <li><a href="https://rmarkdown.rstudio.com/lesson-1.html">Rmarkdown</a>: R Markdown (a markup language for creating formatted text using a plain-text editor) provides an authoring framework for writing documents that can incorporate R codes that can be saved and executed to generate high quality reports that can be shared with an audience. This document was written in RMarkdown; however, as a consultant, I’ve written reports to clients that, for example, were updated every 6 months with new data and I only had to make minor edits to the report because all the basic stats were automatically regenerated once I recompiled the document.</li>
 <li><a href="https://r4ds.hadley.nz/">R for Data Science</a>: Several parts of this document will probably direct you to “R for Data Science” (Hadley Wickham), which is an amazing resource for introductory data science. I use this resource, which is open-source, for many courses I teach and to train my own research students.</li>
 </ol>
-<p>This document will (hopefully) updated regularly, so please look at the Version History on the main page to see any changes/updates to the file.</p>
+<p>This document will be updated continuously. Please look at the Version History on the main page to see updates/changes made.</p>
 <p><br></p>
 </div>
 <div id="r-overview" class="section level1" number="2">
@@ -1680,16 +1680,16 @@ commands directly into the R console.</p>
 <p>In this part we’re going to show you how to generate random data, in particular, random data from our distributions, but before we do that we need to
 introduce the <code>set.seed()</code> function. In most computer languages, we can generate random numbers (and random data); however, the crux of generating random data is how to get the same results for comparative purposes, and this is where the <code>set.seed()</code> function comes in. In the simplest terms, the <code>set.seed()</code> function allows consistently get the “same” randomly generated data – not very random, but it has a purpose. For example, if you write the following code:</p>
 <pre class="r"><code>for(i in 1:10) print(sample(1:100,1))</code></pre>
-<pre><code>[1] 80
-[1] 3
-[1] 13
-[1] 85
-[1] 34
-[1] 99
-[1] 41
-[1] 2
-[1] 6
-[1] 75</code></pre>
+<pre><code>[1] 10
+[1] 67
+[1] 67
+[1] 77
+[1] 88
+[1] 38
+[1] 74
+[1] 76
+[1] 9
+[1] 79</code></pre>
 <p>You’ll probably get different values than the list above; however, if you repeat the previous code with the following modification, you’ll (hopefully) get the exact same values as me:</p>
 <pre class="r"><code>set.seed(2018)
 for(i in 1:10) print(sample(1:100,1))</code></pre>
@@ -2751,7 +2751,7 @@ I’ll leave it to you to explore the package more.
 <p>As mentioned, parallel processing allows us to simultaneously apply a function instead of going through each variable sequentially. To figure out the computing time, we can use the function <code>proc.time</code>, which can be used to determine how much “real” and CPU time (in seconds) a process takes:</p>
 <pre class="r"><code>proc.time()</code></pre>
 <pre><code>   user  system elapsed 
-  1.378   0.257   3.095 </code></pre>
+  1.436   0.264   3.280 </code></pre>
 <p>The third output <code>elapsed</code> will be important for us to use to calculate the process time.</p>
 <blockquote>
 <p><b>COMMENT</b>: In order to accurately calculate the process time, we need to:</p>
@@ -2779,8 +2779,8 @@ for (i in 1:100000){  # Loop through the vector, adding one
 stop &lt;- proc.time()   # Stop the clock
 stop - start          # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.005   0.000   0.005 </code></pre>
-<p>In this case, the computing time was 0.005 seconds, which isn’t very long but this is clearly not a computationally extensive task.</p>
+  0.005   0.000   0.004 </code></pre>
+<p>In this case, the computing time was 0.004 seconds, which isn’t very long but this is clearly not a computationally extensive task.</p>
 <pre class="r"><code>colind &lt;- 7:10                                        # numerical index for each variable
 output &lt;- NULL                                        # empty object to be appended
 # Start highlighting code here
@@ -2792,7 +2792,7 @@ stop1  &lt;- proc.time()
 # Stop highlighting code here
 stop1 - start1                                        # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.001   0.000   0.002 </code></pre>
+  0.001   0.000   0.001 </code></pre>
 <pre class="r"><code>output &lt;- data.frame(matrix(output,ncol=2,byrow=T))   # convert to data.frame to make it pretty
 row.names(output) &lt;- names(data2)[colind]             # naming the rows
 colnames(output)  &lt;- c(&#39;mean&#39;,&#39;sd&#39;)                   # naming the columns
@@ -2805,8 +2805,8 @@ stop2  &lt;- proc.time()
 # Stop highlighting code here
 stop2 - start2                                        # Computing time</code></pre>
 <pre><code>   user  system elapsed 
-  0.001   0.000   0.000 </code></pre>
-<p>Adding the <code>proc.time</code> function to the code above, we can see that the processing time for option 1 (sequential) is 0.002 seconds while for option 2 (parallel), the processing time is much smaller at 0.0002 seconds (i.e. sequential is 10 times longer). Although that does not seem like much, time is not linear, so as we scale up the number of (for example) variables we are applying the function to, time won’t increase linearly but exponentially.</p>
+  0.001   0.000   0.001 </code></pre>
+<p>Adding the <code>proc.time</code> function to the code above, we can see that the processing time for option 1 (sequential) is 0.001 seconds while for option 2 (parallel), the processing time is much smaller at 0.001 seconds (i.e. sequential is 1 times longer). Although that does not seem like much, time is not linear, so as we scale up the number of (for example) variables we are applying the function to, time won’t increase linearly but exponentially.</p>
 <blockquote>
 <b>COMMENT</b>: Processing time will vary for everyone because each computer’s specs are different while the current tasks being run by other programs on the same computer will also impact the resources at your disposal.
 </blockquote>
@@ -2818,7 +2818,7 @@ stop2 - start2                                        # Computing time</code></p
   }</code></pre>
 <p>This <code>comp.time</code> function is the exact same as the original (and everything we did above is still applicable) but it is a wrapper that will also output the actual time when <code>proc.time</code> is started (or stopped). That is, if you replace <code>proc.time</code> with <code>comp.time</code>, you will see the actual clock start time when the code is initiated and the clock time when it is completed. Thus, if we run the code right now, you’ll see the actual clock time when I compiled this code:</p>
 <pre class="r"><code>start3 &lt;- comp.time()</code></pre>
-<pre><code>Time: 14:57:41 </code></pre>
+<pre><code>Time: 15:05:23 </code></pre>
 </blockquote>
 <p><br></p>
 </div>
